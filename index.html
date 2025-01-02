@@ -10,34 +10,65 @@
             font-family: Arial, sans-serif;
             background-color: #121212;
             color: white;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #1e1e1e;
             display: flex;
             justify-content: center;
+            padding: 15px 0;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1.2em;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #6200ea;
+        }
+
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .container {
             text-align: center;
-            padding: 40px;
-            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .home {
             background: linear-gradient(145deg, #2c2c2c, #1e1e1e);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
-            width: 100%;
-            max-width: 500px;
         }
 
-        h1 {
-            font-size: 2.5em;
+        .section-header {
+            font-size: 3em;
+            margin: 0;
             color: #ffffff;
-            margin-bottom: 20px;
             text-shadow: 0 0 10px rgba(255, 0, 255, 0.6), 0 0 20px rgba(255, 0, 255, 0.4);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
         }
 
-        h2 {
-            font-size: 1.5em;
-            margin-bottom: 30px;
-            color: #d4d4d4;
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .developer, .about {
+            background: linear-gradient(145deg, #1e1e1e, #2c2c2c);
         }
 
         .download-btn {
@@ -72,66 +103,52 @@
         .footer a:hover {
             color: #6200ea;
         }
-
-        .popup {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            justify-content: center;
-            align-items: center;
-            color: white;
-            z-index: 1000;
-        }
-
-        .popup-content {
-            background-color: #2b2b2b;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-        }
-
-        .popup-button {
-            background-color: #6200ea;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .popup-button:hover {
-            background-color: #3700b3;
-        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>#1 ROBLOX EXECUTOR IN 2025</h1>
-        <h2>100% UNC 🛠️🧏🤫</h2>
-        <a href="https://github.com/notif4ir/ValkX/raw/refs/heads/main/ValkXBootstrapper.zip" target="_blank" class="download-btn" id="downloadBtn">Download ValkX</a>
-    </div>
-    
-    <div class="popup" id="popup">
-        <div class="popup-content">
-            <p>Thanks For Downloading! For More Info Join Our Discord Server <a href="https://discord.gg/cUJ5YEtsqx" target="_blank">here</a>.</p>
-            <button class="popup-button" onclick="closePopup()">Close</button>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#developer">Developer</a>
+        <a href="#about">About</a>
+    </nav>
+
+    <section id="home" class="home">
+        <h1 class="section-header">#1 EXECUTOR ON ROBLOX</h1>
+        <h1 class="section-header">100% UNC 🤫</h1>
+        <h2 class="section-header">ValkX EXECUTOR</h2>
+        <a href="https://github.com/notif4ir/ValkX/raw/refs/heads/main/ValkXBootstrapper.zip" target="_blank" class="download-btn">Download Now</a>
+    </section>
+
+    <section id="developer" class="developer">
+        <div>
+            <h1 class="section-header">Developers</h1>
+            <p>notf4ir - Creator And Founder Of ValkX made the UI, Code etc.</p>
+            <p>nottag - Found Alot Of Good API's that valkx currently uses.</p>
         </div>
-    </div>
+    </section>
+
+    <section id="about" class="about">
+        <div>
+            <h1 class="section-header">About</h1>
+            <p>ValkX is an 100% unc executor, it uses very trusted and good api's in which combined give 100 Unc.</p>
+            <p>ValkX is an overpowered executor with tons of updates and a simple ui a baby can use.</p>
+        </div>
+    </section>
 
     <script>
-        document.getElementById('downloadBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            window.open(e.target.href, '_blank');
-            document.getElementById('popup').style.display = 'flex';
-        });
+        const sections = document.querySelectorAll('.section-header');
 
-        function closePopup() {
-            document.getElementById('popup').style.display = 'none';
-        }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.5 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
     </script>
 </body>
 </html>
